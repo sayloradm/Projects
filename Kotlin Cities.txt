@@ -1,0 +1,107 @@
+fun main() 
+{
+    var cityLocations = listCities()
+    
+    println("***********STEP TWO***********")
+    for(i in cityLocations)
+    {
+    	println(i)
+    }
+   	println()
+    
+    println("***********STEP THREE***********")
+    println("The distance between Seattle and Tacoma is " + distanceFromSeattle(cityLocations[4]))
+    println()
+    
+    println("***********STEP FOUR***********")
+    var allDist = cityLocations.map{distanceFromSeattle(it)}
+    println(allDist)
+    println()
+    
+    println("***********STEP FIVE***********")
+    println("List of cities over 1000Km from Seattle - ")
+    
+    var filtr = cityLocations.filter{filterList(it)}
+    for ( i in filtr){println(i.name)}
+    println()
+    
+    println("***********STEP SIX***********")
+    var west = (cityLocations.filter{it.longitude < -89.97803}).map{it.name}
+    println(west)
+    println()
+    
+    println("***********STEP SEVEN***********")
+    var furthest = cityLocations.maxBy{distanceFromSeattle(it)}
+    println("Max Distance: $furthest")
+    println()
+    
+    
+    println("***********STEP EIGHT***********")
+    
+    var map = mapOf(cityLocations.map{it.name} to cityLocations)
+    
+    var mappedCities = mutableMapOf<String, City>()
+    
+    for (i in cityLocations)
+    {
+        mappedCities[i.name] = i
+    }
+   	
+    
+    for ((k,v) in mappedCities)
+    {
+        println("Name $k: City $v")
+    }
+    
+    if(mappedCities.containsKey("Bozeman"))
+    {
+     println("The latitude of Bozeman is " + mappedCities.getValue("Bozeman").latitude)
+    }
+    
+    
+}
+data class City(val name: String, val latitude: Double, val longitude: Double)
+{   
+}
+
+fun listCities(): List<City>
+{
+    val city1 = City("Atlanta",33.7490,-84.3380)
+    val city2 = City("Bozeman",45.677,-111.0129)
+    val city3 = City("New York",40.7128,-74.0060)
+    val city4 = City("San Francisco",37.7749,-122.4194)
+    val city5 = City("Tacoma",47.2529,-122.4443)
+   	val cities = listOf(city1,city2,city3,city4,city5)
+   
+ 	return cities
+}
+
+fun distanceFromSeattle(citi: City) : Double
+{
+    val distance = haversine(citi.latitude, citi.longitude, 47.6062, -122.3321)
+    return distance
+}
+
+fun filterList(citi : City): Boolean
+{
+    val dist = distanceFromSeattle(citi)
+    
+    if( dist > 1000)
+    {
+        return true
+    }
+    else
+    {
+        return false
+    }
+}
+
+fun haversine(lat1: Double, lon1: Double, lat2: Double, lon2: Double) : Double
+{
+    val R = 6372.8
+    val l1 = Math.toRadians(lat1)
+    val l2 = Math.toRadians(lat2)
+    val dl = Math.toRadians(lat2 - lat1)
+    val dr = Math.toRadians(lon2 - lon1)
+    return 2*R * Math.asin(Math.sqrt(Math.pow(Math.sin(dl/2),2.0) + Math.pow(Math.sin(dr/2),2.0)* Math.cos(l1)*Math.cos(l2)))
+}                                                                           

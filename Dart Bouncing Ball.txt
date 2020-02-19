@@ -1,0 +1,105 @@
+<canvas id ="canvas" width = "400" height = "300">
+
+//BELOW IS DART CODE, ABOVE IS HTML
+
+import 'dart:html';
+import 'dart:math';
+
+class Ball
+{
+  
+double x;
+double y;
+var r;
+double vx;
+double vy;
+CanvasElement context;
+CanvasRenderingContext2D ctx;
+var rng = new Random();
+num timeStamp = 0;  
+  
+  
+  Ball(double x,double y, var r, double vx, double vy,CanvasElement context,CanvasRenderingContext2D ctx)
+  {
+    this.context = context;
+    this.ctx = ctx;
+    this.x = x;
+    this.y = y;
+    this.r = r;
+    this.vx = vx;
+    this.vy = vy;
+    
+  }
+
+
+drawMove(MouseEvent event)
+{
+  this.x = event.client.x;
+  this.y = event.client.y;
+  
+  clear();
+  drawBall(this.x, this.y, this.r);
+}
+
+void clear() {
+  ctx..fillStyle = "black";
+  ctx..fillRect(0, 0, context.width, context.height);
+}
+
+void drawBall(double x,double y,double radius) {
+
+  ctx.beginPath();
+  ctx.arc(x, y, r, 0, 3.14 * 2);
+  ctx.fillStyle = "chartreuse";
+  ctx.fill();
+  ctx.closePath();
+}
+  
+void moveBall(num delta)
+{
+    
+this.x += this.vx;
+this.y += this.vy;
+
+
+this.vx *= .99;
+this.vy *= .99;
+
+this.vy += .25;
+this.vx += .25;
+
+if (this.y + this.r > context.height) 
+{
+this.y = context.height - this.r;
+this.vy = -this.vy.abs();
+}
+  
+if (this.x + this.r > context.width) 
+{
+this.x = context.width - this.r;
+this.vx = -this.vx.abs();
+}
+  
+clear();
+drawBall(this.x, this.y, this.r);
+  
+window.requestAnimationFrame(moveBall);
+}
+  
+  
+}
+
+
+
+void main() 
+{
+ 
+  CanvasElement context = querySelector('#canvas');
+  CanvasRenderingContext2D ctx = context.getContext('2d');
+  Ball myball = new Ball(50,50,15,0,0,context,ctx);
+
+  myball.moveBall(0);
+
+  querySelector("#canvas").onClick.listen(myball.drawMove);
+   
+}
