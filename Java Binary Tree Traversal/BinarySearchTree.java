@@ -8,7 +8,7 @@ package project21;
 
 /**
 *
-* Code written below this was provided by a textbook
+* Binary Search tree code is from textbook
 *
 * Main function written by Adam Saylor
 */
