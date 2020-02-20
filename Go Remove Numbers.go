@@ -1,3 +1,4 @@
+//Removes numbers from a text file and writes a new file not containing numbers
 package main
 
 import "strconv"
