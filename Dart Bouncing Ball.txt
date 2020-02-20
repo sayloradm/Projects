@@ -1,6 +1,7 @@
 <canvas id ="canvas" width = "400" height = "300">
 
 //BELOW IS DART CODE, ABOVE IS HTML
+//creates a bouncing ball that changes trajectories when the screen is clicked on
 
 import 'dart:html';
 import 'dart:math';
