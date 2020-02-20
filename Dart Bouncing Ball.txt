@@ -58,7 +58,8 @@ void drawBall(double x,double y,double radius) {
   
 void moveBall(num delta)
 {
-    
+//Calculations for ball movement provided by Hunter Lloyd
+
 this.x += this.vx;
 this.y += this.vy;
 
@@ -82,6 +83,9 @@ this.vx = -this.vx.abs();
 }
   
 clear();
+
+//End of provided code
+
 drawBall(this.x, this.y, this.r);
   
 window.requestAnimationFrame(moveBall);
