@@ -75,10 +75,10 @@ subroutine printStuff(coinAmnt, coinType)
 	Integer, intent(IN) :: coinAmnt
 	character (len = *) :: coinType
 
-	!print*, coinAmnt
+	
 
 	write(*,'(i9,a9)', advance = 'no')coinAmnt,coinType
-	!write(*,"(3f8.3)", advance = 'no') coinAmnt,coinType 
+	
 
 
 end subroutine printStuff
